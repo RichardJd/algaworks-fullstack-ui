@@ -1,0 +1,92 @@
+<div class="container">
+  <form #lancamentoForm="ngForm" autocomplete="off"
+    (ngSubmit)="salvar(lancamentoForm)">
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h1>{{ editando ? 'Edição de' : 'Novo' }} Lançamento</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <p-selectButton name="tipo" [options]="tipos"
+          [(ngModel)]="lancamento.tipo" #tipo></p-selectButton>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>Vencimento</label>
+        <p-calendar name="dataVencimento" dateFormat="dd/mm/yy"
+          [inline]= false [readonlyInput]="false" [showIcon]=false
+          [(ngModel)]="lancamento.dataVencimento" #dataVencimento="ngModel"
+          required></p-calendar>
+
+        <p-message severity="error" text="Informe uma data de vencimento"
+          *ngIf="dataVencimento.hasError('required') && dataVencimento.dirty"></p-message>
+      </div>
+
+      <div class="ui-g-6 ui-md-3 ui-fluid">
+        <label>{{ tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento' }}</label>
+        <p-calendar name="dataPagamento" dateFormat="dd/mm/yy"
+          [(ngModel)]="lancamento.dataPagamento"></p-calendar>
+      </div>
+
+      <div class="ui-g-12 ui-md-9 ui-fluid">
+        <label>Descrição</label>
+        <input pInputText type="text" name="descricao"
+          [(ngModel)]="lancamento.descricao" #descricao="ngModel"
+          required minlength="5">
+
+          <p-message severity="error" text="Informe uma descrição"
+            *ngIf="descricao.hasError('required') && descricao.dirty"></p-message>
+
+          <p-message severity="error" text="Minimo de {{ descricao.errors.minlength.requiredLength }} caracteres"
+            *ngIf="descricao.hasError('minlength') && descricao.dirty"></p-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-3 ui-fluid">
+        <label>Valor</label>
+        <input pInputText type="text" placeholder="0,00" name="valor"
+          currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }"
+          [(ngModel)]="lancamento.valor" #valor="ngModel" required>
+
+        <p-message severity="error" text="Informe o valor"
+          *ngIf="valor.hasError('required') && valor.dirty"></p-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Categoria</label>
+        <p-dropdown name="categoria" [options]="categorias"
+          placeholder="Selecione" [autoWidth]="false"
+          [(ngModel)]="lancamento.categoria.codigo" #categoria="ngModel"
+          required></p-dropdown>
+
+        <p-message severity="error" text="Informe a categoia"
+          *ngIf="categoria.hasError('required') && categoria.dirty"></p-message>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-fluid">
+        <label>Pessoa</label>
+        <p-dropdown name="pessoa" [options]="pessoas" placeholder="Selecione"
+          [autoWidth]="false" [filter]="true"
+          [(ngModel)]="lancamento.pessoa.codigo" #pessoa="ngModel"
+          required></p-dropdown>
+
+        <p-message severity="error" text="Informe a pessoa"
+          *ngIf="pessoa.hasError('required') && pessoa.dirty"></p-message>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Observação</label>
+        <textarea pInputTextarea rows="3" name="observacao"
+          [(ngModel)]="lancamento.observacao"></textarea>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="!lancamentoForm.valid"></button>
+        <button pButton type="button" label="Novo" class="ui-button-inf"
+          (click)="novo(lancamentoForm)"></button>
+        <a routerLink="/lancamentos">Voltar para a pesquisa</a>
+      </div>
+    </div>
+
+  </form>
+</div>

@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #404C51;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+label {
+  font-weight: bold;
+}
+
+.ui-button:hover{
+  background-color: #116fbf;
+  color: #ffffff;
+  border-color: #116fbf;
+}
+
+.ui-message {
+  margin-top: 4px !important;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+    margin: 0 auto;
+  }
+}
+
+.col-valor {
+  text-align: right;
+}
+
+.col-data {
+  text-align: center;
+}
+
+.col-acoes {
+  text-align: center;
+}
